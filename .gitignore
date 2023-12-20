@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+
+# Data
+data/*.csv
+!data/dummy_dna_data.csv
+
+# Notebooks
+.ipynb_checkpoints
