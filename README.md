@@ -1,28 +1,75 @@
-# DNA_sequencing_kmer
+# DNA Sequencing k-mer Classifier
 
+This project provides a command-line tool to classify DNA sequences into gene families using a machine learning approach based on k-mer frequency analysis.
 
-# DNA Sequencing Analysis Colab Notebook
+The original analysis was performed in a Jupyter Notebook and has been refactored into a structured and reusable Python application.
 
-This Colab notebook contains code for analyzing DNA sequencing data and predicting gene families. The notebook utilizes Python and various libraries such as NumPy, Pandas, scikit-learn, and matplotlib to perform the analysis and visualization.
+## Project Overview
+
+The tool performs the following steps:
+1.  **Loads** DNA sequences and their corresponding classes from a CSV file.
+2.  **Extracts Features** by breaking down each DNA sequence into k-mers (substrings of length k) and counting their frequencies.
+3.  **Trains** a Multinomial Naive Bayes classifier on the k-mer frequency features.
+4.  **Saves** the trained classifier and the feature vectorizer for later use.
+5.  **Predicts** the class of new DNA sequences using the pre-trained model.
+
+---
+
+## Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/adityasengar/DNA_sequencing_kmer.git
+    cd DNA_sequencing_kmer
+    ```
+
+2.  It is recommended to use a virtual environment:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
+
+3.  Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+---
 
 ## Usage
 
-To run this Colab notebook, follow these steps:
+The application is controlled via `main.py` and has two modes: `train` and `predict`. You will need a CSV file with 'sequence' and 'class' columns. A dummy example is provided in `data/dummy_dna_data.csv`.
 
-1. Open the notebook in Google Colab by clicking on the following link: [DNA Sequencing Analysis Notebook](https://colab.research.google.com/your-notebook-link)
+### Training the Model
 
-2. Make a copy of the notebook by going to **File -> Save a copy in Drive**.
+To train the model on your dataset and save the trained artifacts:
 
-3. Upload your DNA sequencing data in CSV format to your Google Drive.
+```bash
+python main.py data/your_dna_data.csv --mode train --kmer_size 6
+```
 
-4. In the notebook, update the file path to your uploaded CSV data in the appropriate code cell.
+This will:
+- Load data from `data/your_dna_data.csv`.
+- Build features using 6-mers.
+- Train the classifier.
+- Save the trained model to `models/model.pkl` and the vectorizer to `models/vectorizer.pkl`.
 
-5. Run each code cell sequentially to execute the analysis and predictions.
+### Making Predictions
 
-## Contributing
+Once the model is trained, you can use it to predict the classes of new sequences.
 
-Contributions to this project are welcome. If you have any ideas, improvements, or bug fixes, please feel free to contribute.
+```bash
+python main.py data/new_sequences.csv --mode predict --kmer_size 6
+```
 
-## License
+This will:
+- Load the pre-trained model and vectorizer from the `models/` directory.
+- Load the new sequences.
+- Print the predicted class for each sequence.
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+### Command-Line Arguments
+
+-   `data_file`: Path to the input CSV data file. (Required)
+-   `--kmer_size`: The size of the k-mer to use for feature extraction. (Default: 4)
+-   `--mode`: `train` or `predict`. (Default: `train`)
+-   `--model_dir`: Directory to save/load the model and vectorizer. (Default: `models`)
