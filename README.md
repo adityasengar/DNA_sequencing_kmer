@@ -73,3 +73,4 @@ This will:
 -   `--kmer_size`: The size of the k-mer to use for feature extraction. (Default: 4)
 -   `--mode`: `train` or `predict`. (Default: `train`)
 -   `--model_dir`: Directory to save/load the model and vectorizer. (Default: `models`)
+# Updated on 2026-01-09
